@@ -124,3 +124,30 @@ Route::group([
         return redirect()->route('admin.dashboard');
     })->name('home');
 });
+
+/*
+//Utilizando controller para a lógica da rota
+Route::get('/products', 'ProductController@index')->name('products.index');
+
+//Route para cadastrado de produto
+Route::get('/products/create', 'ProductController@create')->name('products.create');
+
+//Utilizando controller com parâmetros
+Route::get('/products/{id}', 'ProductController@show')->name('products.show');
+
+//Route para exibir form de edição de produto
+Route::get('/products/{id}/edit', 'ProductController@edit')->name('products.edit');
+
+//Route para registro no sistema - POST
+Route::post('/products', 'ProductController@store')->name('products.store');
+
+//Route para editar um registro - PUT
+Route::put('/products/{id}', 'ProductController@update')->name('products.update');
+
+//Route para deletar um registro - DELETE
+Route::delete('/products/{id}', 'ProductController@destroy')->name('products.destroy');
+*/
+
+//Resource (Cria automaticamente as rotas de todos os métodos do controller)
+//Middleware (Utilizando middlewares com resources e controllers)
+Route::resource('products', 'ProductController'); //->middleware('auth');
