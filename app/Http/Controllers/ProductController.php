@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateProductRequest;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -57,12 +58,47 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
-        dd('Cadastrando...');
+        //Validações dos campos (Método não recomendável)
+        //O Correto é a criação do arquivo Request através do artisan (make:request) e definir no método rules
+        /*$request->validate([
+            'name' => 'required|min:3|max:255',
+            'description' => 'nullable|min:3|max:10000',
+            'photo' => 'required|image'
+        ]);*/
+        
+        //Mostra todos os parâmetros recebidos da requisição
+        //dd($request->all());
+
+        //Mostra os parâmetros especificos recebidos na requisição
+        //dd($request->only(['name', 'description']));
+
+        //Pega um parâmetro especifico
+        //dd($request->name);
+
+        //Verifica se possui algum campo com o nome informado
+        //dd($request->has('teste'));
+
+        //Retorna todos os campos exceto os informados
+        //dd($request->except('_token'));
+
+        //Upload local de arquivos para dentro do projeto
+        //Alterar em config/filesystems caso necessite trabalhar com upload na pasta public
+        //Verifica se o arquivo é válido
+        if($request->file('photo')->isValid()){
+
+            //Realiza o armazenamento do arquivo com um nome aleatório
+            //$request->photo->store('products');
+            
+            //Realiza o upload do arquivo com um nome definido
+            $nameFile = $request->name . '.' . $request->photo->extension();
+            dd($request->photo->storeAs('products', $nameFile));
+
+        }
     }
 
     /**
