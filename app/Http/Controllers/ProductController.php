@@ -21,9 +21,9 @@ class ProductController extends Controller
         ]);*/
 
         //Aplicação de middleware em todos os métodos, exceto..
-        $this->middleware('auth')->except([
+        /*$this->middleware('auth')->except([
             'index', 'show'
-        ]);
+        ]);*/
     }
 
 
@@ -34,7 +34,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return 'Listagem de produtos';
+        $teste = 123;
+        $teste2 = 321;
+        $teste3 = [1,2,3,4,5];
+        $produtos = ['TV', 'Geladeira', 'Forno', 'Sofá'];
+
+        //Retorna view passando uma variável, podendo passar como um array
+        //[ "key" => "valor" ] ou através do método compact()
+        return view('admin.pages.products.index', compact('teste', 'teste2', 'teste3', 'produtos'));
     }
 
     /**
@@ -44,7 +51,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return 'Criação de produto';
+        return view('admin.pages.products.create');
     }
 
     /**
@@ -55,7 +62,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return "Registro salvo";
+        dd('Cadastrando...');
     }
 
     /**
@@ -77,7 +84,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return "Exibindo a edição do produto $id";
+        return view('admin.pages.products.edit', compact('id'));
     }
 
     /**
@@ -89,7 +96,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return "Atualizando o produto $id";
+        dd('Editando produto...');
     }
 
     /**
