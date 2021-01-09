@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -107,23 +108,6 @@ Route::middleware([])->group(function(){
 });
 */
 
-//Forma mais enxuta de agrupamento de rotas
-Route::group([
-    'middleware' => ['auth'],
-    'prefix' => 'admin',
-    'namespace' => 'Admin',
-    'name' => 'admin.'
-], function () {
-    Route::get('/dashboard', 'TesteController@teste')->name('dashboard');
-
-    Route::get('/financeiro', 'TesteController@teste')->name('financeiro');
-
-    Route::get('/produtos', 'TesteController@teste')->name('produtos');
-
-    Route::get('/', function () {
-        return redirect()->route('admin.dashboard');
-    })->name('home');
-});
 
 /*
 //Utilizando controller para a lógica da rota
@@ -148,8 +132,28 @@ Route::put('/products/{id}', 'ProductController@update')->name('products.update'
 Route::delete('/products/{id}', 'ProductController@destroy')->name('products.destroy');
 */
 
+//Forma mais enxuta de agrupamento de rotas
+Route::group([
+    'middleware' => ['auth'],
+    'prefix' => 'admin',
+    'namespace' => 'Admin',
+    'name' => 'admin.'
+], function () {
+    Route::get('/dashboard', 'TesteController@teste')->name('dashboard');
+
+    Route::get('/financeiro', 'TesteController@teste')->name('financeiro');
+
+    Route::get('/produtos', 'TesteController@teste')->name('produtos');
+
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('home');
+});
+
 //Resource (Cria automaticamente as rotas de todos os métodos do controller)
 //Middleware (Utilizando middlewares com resources e controllers)
-Route::resource('products', 'ProductController'); //->middleware('auth');
+Route::resource('products', 'ProductController')->middleware('auth');
 
-Route::any('products/search', 'ProductController@search')->name('products.search');
+Route::any('products/search', 'ProductController@search')->name('products.search')->middleware('auth');
+
+Auth::routes(['register' => false]);
