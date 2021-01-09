@@ -151,3 +151,5 @@ Route::delete('/products/{id}', 'ProductController@destroy')->name('products.des
 //Resource (Cria automaticamente as rotas de todos os métodos do controller)
 //Middleware (Utilizando middlewares com resources e controllers)
 Route::resource('products', 'ProductController'); //->middleware('auth');
+
+Route::any('products/search', 'ProductController@search')->name('products.search');
