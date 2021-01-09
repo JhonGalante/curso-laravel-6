@@ -152,8 +152,8 @@ Route::group([
 
 //Resource (Cria automaticamente as rotas de todos os métodos do controller)
 //Middleware (Utilizando middlewares com resources e controllers)
-Route::resource('products', 'ProductController')->middleware('auth');
+Route::resource('products', 'ProductController')->middleware(['auth', 'check.is.admin']);
 
-Route::any('products/search', 'ProductController@search')->name('products.search')->middleware('auth');
+Route::any('products/search', 'ProductController@search')->name('products.search')->middleware(['auth', 'check.is.admin']);
 
 Auth::routes(['register' => false]);
